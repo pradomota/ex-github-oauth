@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -5,8 +6,11 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressLayouts = require('express-ejs-layouts');
+const session = require('express-session');
+const passport = require('passport');
 
 require('./configs/db.config');
+require('./configs/passport.config');
 
 const auth = require('./routes/auth.routes');
 const users = require('./routes/users.routes');
@@ -25,6 +29,18 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'Super Secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: process.env.SESSION_SECURE || false,
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 1000
+  }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
