@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const DB_NAME = 'ex-twitter-oauth';
+const DB_NAME = 'ex-github-oauth';
 const MONGO_URI = process.env.MONGO_URI || `mongodb://localhost/${DB_NAME}`;
 
 mongoose.Promise = Promise;

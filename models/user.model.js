@@ -9,8 +9,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Email is required'],
         unique: true
-        
-    }
+    },
+    githubId: String
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
