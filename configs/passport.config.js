@@ -18,6 +18,7 @@ passport.use('github-auth', new GitHubStrategy({
   clientSecret: process.env.GH_CLIENT_SECRET,
   callbackURL: process.env.GH_CLIENT_CB_URL || '/auth/github/cb'
 }, (accessToken, refreshToken, profile, next) => {
+  console.log(profile);
   const githubId = profile.id;
   const name = profile.displayName;
   const email = profile.emails[0] ? profile.emails[0].value : undefined;
